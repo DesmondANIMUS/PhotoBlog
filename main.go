@@ -7,6 +7,11 @@ import (
 	"net/http"
 	"os"
 
+	"path/filepath"
+
+	"strings"
+
+	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/nu7hatch/gouuid"
 )
@@ -30,16 +35,37 @@ func main() {
 	http.HandleFunc("/admin", admin)
 	http.HandleFunc("/login", login)
 
-	http.ListenAndServe(":8888", nil)
+	http.ListenAndServe(":8888", context.ClearHandler(http.DefaultServeMux))
+}
+
+type IndexPage struct {
+	Photos []string
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	err := tpl.ExecuteTemplate(w, "index.html", nil)
+	err := tpl.ExecuteTemplate(w, "index.html", IndexPage{
+		Photos: getPics(),
+	})
 	if err != nil {
 		log.Println(err)
 	}
 
 	log.Println(r.URL.Path)
+}
+
+func getPics() []string {
+	photos := make([]string, 0)
+	filepath.Walk("assets/images", func(path string, fi os.FileInfo, err error) error {
+		if fi.IsDir() {
+			return nil
+		}
+
+		path = strings.Replace(path, "\\", "/", -1)
+		photos = append(photos, path)
+		return nil
+	})
+
+	return photos
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
