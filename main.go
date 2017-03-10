@@ -11,6 +11,7 @@ import (
 
 	"strings"
 
+	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/nu7hatch/gouuid"
 )
@@ -34,7 +35,7 @@ func main() {
 	http.HandleFunc("/admin", admin)
 	http.HandleFunc("/login", login)
 
-	http.ListenAndServe(":8888", nil)
+	http.ListenAndServe(":8888", context.ClearHandler(http.DefaultServeMux))
 }
 
 type IndexPage struct {
