@@ -24,9 +24,7 @@ func init() {
 	s, _ := uuid.NewV4()
 	secretKey = s.String()
 	tpl = template.Must(template.ParseGlob("./*.html"))
-}
-
-func main() {
+	
 	http.Handle("/assets/",
 		http.StripPrefix("/assets",
 			http.FileServer(http.Dir("./assets"))))
@@ -34,8 +32,6 @@ func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/admin", admin)
 	http.HandleFunc("/login", login)
-
-	http.ListenAndServe(":8888", context.ClearHandler(http.DefaultServeMux))
 }
 
 type IndexPage struct {
