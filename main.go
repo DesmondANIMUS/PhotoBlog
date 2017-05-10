@@ -10,8 +10,7 @@ import (
 	"path/filepath"
 
 	"strings"
-
-	"github.com/gorilla/context"
+	
 	"github.com/gorilla/sessions"
 	"github.com/nu7hatch/gouuid"
 )
