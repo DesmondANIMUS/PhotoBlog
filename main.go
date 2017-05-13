@@ -120,7 +120,7 @@ func uploadPage(w http.ResponseWriter, r *http.Request) {
 		defer src.Close()
 
 		//writing file by creating one
-		dst, err := os.Create("./assets/images/" + hdr.Filename)
+		dst, err := os.Create("~/src/photoblog-code/assets/images/" + hdr.Filename)
 		if err != nil {
 			log.Println(err)
 			http.Error(w, err.Error(), 500)
