@@ -3,9 +3,11 @@
     <head> <link rel="stylesheet" href="./assets/css/styleLogin.css"> </head>
     <body>
         <h1> ADMIN PAGE </h1> <br><hr><br>
-        <form method="POST">            
-             <input type="file" name="pic" accept="image/*.jpg">
-            <button type="submit" value="upload"> Submit File </button>
+        <form method="POST" enctype="multipart/form-data">            
+            <div>
+                <input type="file" name="blogFile" accept="image/*.jpg">
+                <button type="submit"> Submit File </button>
+            </div>
         </form>
     </body>
 </html>
