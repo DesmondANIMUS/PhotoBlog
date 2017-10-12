@@ -8,5 +8,5 @@ Go to browser and type in url: http://localhost:8888/ </br>
 Enjoy!
 
 # Credentials to be used inside website:
-E-mail: blog@admin.in
+E-mail: blog@admin.in </br>
 Password: carrot
