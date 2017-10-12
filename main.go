@@ -1,6 +1,7 @@
 package blog
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"log"
@@ -22,6 +23,9 @@ func init() {
 	s, _ := uuid.NewV4()
 	secretKey = s.String()
 	tpl = template.Must(template.ParseGlob("./*.html"))
+}
+
+func main() {
 	http.Handle("/assets/",
 		http.StripPrefix("/assets",
 			http.FileServer(http.Dir("./assets"))))
@@ -30,6 +34,9 @@ func init() {
 	http.HandleFunc("/admin", admin)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/upload_page", uploadPage)
+
+	fmt.Println("Server running on port 80")
+	http.ListenAndServe(":80", nil)
 }
 
 type IndexPage struct {
