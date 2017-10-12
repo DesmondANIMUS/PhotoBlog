@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 
 	"strings"
-	
+
 	"github.com/gorilla/sessions"
 	"github.com/nu7hatch/gouuid"
 )
@@ -19,11 +19,9 @@ var tpl *template.Template
 var secretKey string
 
 func init() {
-
 	s, _ := uuid.NewV4()
 	secretKey = s.String()
 	tpl = template.Must(template.ParseGlob("./*.html"))
-	
 	http.Handle("/assets/",
 		http.StripPrefix("/assets",
 			http.FileServer(http.Dir("./assets"))))
@@ -31,6 +29,7 @@ func init() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/admin", admin)
 	http.HandleFunc("/login", login)
+	http.HandleFunc("/upload_page", uploadPage)
 }
 
 type IndexPage struct {
@@ -68,7 +67,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "blogSession")
 
 	if r.Method == http.MethodPost {
-		if r.FormValue("pass") == "sakamoto" && r.FormValue("mail") == "des@test.in" {
+		if r.FormValue("pass") == "div_nisha" && r.FormValue("mail") == "blog@admin.in" {
 			session.Values["mail"] = r.FormValue("mail")
 			session.Save(r, w)
 			http.Redirect(w, r, "/admin", http.StatusTemporaryRedirect)
@@ -93,11 +92,6 @@ func admin(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Redirect(w, r, "/login", 301)
 	} else {
-
-		if r.Method == http.MethodPost {
-			uploadPage(w, r)
-		}
-
 		err := tpl.ExecuteTemplate(w, "admin.html", nil)
 		if err != nil {
 			log.Println(err)
@@ -120,7 +114,7 @@ func uploadPage(w http.ResponseWriter, r *http.Request) {
 		defer src.Close()
 
 		//writing file by creating one
-		dst, err := os.Create("~/src/photoblog-code/assets/images/" + hdr.Filename)
+		dst, err := os.Create("./assets/images/" + hdr.Filename)
 		if err != nil {
 			log.Println(err)
 			http.Error(w, err.Error(), 500)

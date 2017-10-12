@@ -10,3 +10,5 @@ handlers:
   script: _go_app
 - url: /login
   script: _go_app
+- url: /upload_page
+  script: _go_app

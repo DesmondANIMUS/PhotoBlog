@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <head><link rel="stylesheet" href="./assets/css/styleLogin.css"></head>
+    <head>
+        <link rel="stylesheet" href="./assets/css/styleLogin.css">
+        <link rel="stylesheet" href="./assets/css/main.css">
+        <link rel="stylesheet" href="./assets/css/adminButton.css">        
+    </head>
     <body>
-        <center><h1> INDEX PAGE </h1>
-        {{ range .Photos }}
-        <img src="{{ . }}" alt="">
+        <center><h1> Blog Photos </h1>
+        {{ range .Photos}}
+            {{if not . }}
+                <strong>The blog is empty</strong>                
+            {{else}}
+            <img src="{{ . }}" alt="">
+            {{end}}
         {{ end }} </center>
+
+        <br><br><br>
+        <button class="btn" type="button"><a href="/admin"><span class="whiteText">Admin Page</span></a></button>
     </body>
 </html>
