@@ -1,4 +1,4 @@
-package blog
+package main
 
 import (
 	"fmt"
@@ -35,8 +35,8 @@ func main() {
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/upload_page", uploadPage)
 
-	fmt.Println("Server running on port 80")
-	http.ListenAndServe(":80", nil)
+	fmt.Println("Go to browser and type http://localhost:888/ in url")
+	http.ListenAndServe(":8888", nil)
 }
 
 type IndexPage struct {
@@ -74,7 +74,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "blogSession")
 
 	if r.Method == http.MethodPost {
-		if r.FormValue("pass") == "div_nisha" && r.FormValue("mail") == "blog@admin.in" {
+		if r.FormValue("pass") == "carrot" && r.FormValue("mail") == "blog@admin.in" {
 			session.Values["mail"] = r.FormValue("mail")
 			session.Save(r, w)
 			http.Redirect(w, r, "/admin", http.StatusTemporaryRedirect)
