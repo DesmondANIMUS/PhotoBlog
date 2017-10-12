@@ -49,7 +49,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func getPics() []string {
 	photos := make([]string, 0)
-	filepath.Walk("assets/images", func(path string, fi os.FileInfo, err error) error {
+	filepath.Walk("./assets/images", func(path string, fi os.FileInfo, err error) error {
 		if fi.IsDir() {
 			return nil
 		}
